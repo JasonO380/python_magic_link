@@ -1,4 +1,3 @@
-from app.services import test 
 from app import app
 from flask import request, jsonify, url_for, render_template
 from app.models import User

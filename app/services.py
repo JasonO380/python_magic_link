@@ -4,10 +4,6 @@ from app.models import User
 from app.utils import generate_token, send_magic_link
 from datetime import timedelta, datetime
 
-
-def test():
-    return jsonify({'Balls': 'check your mouth for them'}), 200
-
 def authenticate(form):
     # Get email from form
     email = form.get('email')
