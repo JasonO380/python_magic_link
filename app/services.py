@@ -32,7 +32,7 @@ def authenticate(form):
     # Set the token expiry time
     user.token_expiry = datetime.utcnow() + timedelta(minutes=10)
     # Set the user time created
-    # user.user_created = datetime.utcnow()
+    user.user_created = datetime.utcnow()
     # Commit the changes to the database
     db.session.commit()
 
@@ -84,4 +84,4 @@ def delete_user(user_id):
     if user:
         db.session.delete(user)
         db.session.commit()
-    return redirect(url_for('signup'))
+    return redirect(url_for('authorize'))
