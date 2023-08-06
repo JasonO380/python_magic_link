@@ -1,7 +1,7 @@
-from flask import Flask, jsonify, url_for, redirect
+from flask import Flask, jsonify, url_for, redirect, current_app
 from app import db, mail
 from app.models import User
-from app.utils import generate_token, send_magic_link
+from app.utils import generate_token, send_magic_link, encode_auth_token
 from datetime import timedelta, datetime
 
 def authenticate(form):
@@ -74,10 +74,14 @@ def verify_user(token):
     # Clear the user's login token
     user.login_token = None
 
+    # Generate a session token for the authenticated user
+    super_secret_key = current_app.config['SUPER_SECRET_KEY']
+    session_token = encode_auth_token(user.id, super_secret_key)
+
     # Save the updated user to the database
     db.session.commit()
 
-    return jsonify({'message': 'User authenticated successfully'}), 200
+    return jsonify({'message': 'User authenticated successfully', 'session token': session_token}), 200
 
 def delete_user(user_id):
     user = User.query.get(user_id)

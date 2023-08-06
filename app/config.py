@@ -7,6 +7,7 @@ ENV = os.getenv("FLASK_ENV", "development")
 load_dotenv()
 # create a random token
 token=secrets.token_hex(8)
+login_token=secrets.token_hex(8)
 
 # Set the configurations
 class Config:
@@ -23,6 +24,8 @@ class Config:
     MAGIC_KEY = token
     # Secret key for signing tokens
     SECRET_KEY = os.getenv("SECRET_KEY")
+    # secret key for persistent logins
+    SUPER_SECRET_KEY = login_token
 
 class DevelopmentConfig(Config):
     DEBUG = True
